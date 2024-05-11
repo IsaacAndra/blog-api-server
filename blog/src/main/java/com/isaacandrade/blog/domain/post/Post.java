@@ -32,4 +32,26 @@ public class Post {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    public Post(createPostDTO data) {
+        this.title = data.title();
+        this.content = data.content();
+        this.createdAt = data.createdAt();
+        this.isActive = data.isActive();
+    }
+
+    public void updatePost(EditPostDTO data) {
+        if (data.title() != null){
+            this.title = data.title();
+        }
+        if (data.content() != null){
+            this.content = data.content();
+        }
+        if (data.isActive() != null){
+            this.isActive = data.isActive();
+        }
+    }
+
+    public void delete() {
+        this.isActive = false;
+    }
 }
