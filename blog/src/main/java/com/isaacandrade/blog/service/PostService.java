@@ -15,7 +15,7 @@ public class PostService {
 
 
     public List<PostDTO> findAll(){
-        List<Post> posts = postRepository.findByActiveTrue();
+        List<Post> posts = postRepository.findByIsActiveTrue();
         return posts.stream().map(this::mapToPostDTO).collect(Collectors.toList());
     }
 
@@ -24,7 +24,7 @@ public class PostService {
         return mapToPostDTO(posts);
     }
 
-    public PostDTO createPost(createPostDTO data){
+    public PostDTO createPost(CreatePostDTO data){
         Post post = new Post(data);
         Post savedPost = postRepository.save(post);
 
@@ -42,6 +42,7 @@ public class PostService {
     public void deletePost(Long id){
         Post post = postRepository.findById(id).orElseThrow();
         post.delete();
+        postRepository.save(post);
     }
 
     private PostDTO mapToPostDTO(Post post) {

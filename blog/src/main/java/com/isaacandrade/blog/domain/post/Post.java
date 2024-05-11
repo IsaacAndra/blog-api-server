@@ -32,7 +32,7 @@ public class Post {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    public Post(createPostDTO data) {
+    public Post(CreatePostDTO data) {
         this.title = data.title();
         this.content = data.content();
         this.createdAt = data.createdAt();
