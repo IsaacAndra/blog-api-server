@@ -24,4 +24,22 @@ public class User {
     private String email;
     @Column(name = "password")
     private String passWord;
+
+    public User(CreateUserDTO data) {
+        this.userName = data.userName();
+        this.email = data.email();
+        this.passWord = data.passWord();
+    }
+
+    public void updateUser(EditUserDTO data) {
+        if (data.userName() != null){
+            this.userName = data.userName();
+        }
+        if (data.email() != null){
+            this.email = data.email();
+        }
+        if (data.passWord() != null){
+            this.passWord = data.passWord();
+        }
+    }
 }
