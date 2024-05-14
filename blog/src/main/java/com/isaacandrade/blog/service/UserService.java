@@ -35,9 +35,11 @@ public class UserService {
     public UserDTO updateUser(Long id, EditUserDTO data){
         User user = userRepository.findById(id).orElseThrow();
         user.updateUser(data);
+        userRepository.save(user);
+
         return mapToUserDTO(user);
     }
-    
+
     public void deleteUser(Long id){
         User user = userRepository.findById(id).orElseThrow();
         userRepository.delete(user);
