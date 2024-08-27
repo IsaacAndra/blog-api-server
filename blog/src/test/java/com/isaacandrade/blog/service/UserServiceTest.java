@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     @InjectMocks
-    UserService service;
+    UserService userService;
 
     @Mock
     UserRepository userRepository;
@@ -47,7 +47,7 @@ public class UserServiceTest {
     @Test
     void findAllUserWithSuccess(){
         when(userRepository.findAll()).thenReturn(Collections.singletonList(user));
-        List<UserDTO> result = service.findAllUsers();
+        List<UserDTO> result = userService.findAllUsers();
 
         assertEquals(Collections.singletonList(userDTO), result);
         verify(userRepository).findAll();
@@ -59,7 +59,7 @@ public class UserServiceTest {
        when(userRepository.findAll()).thenReturn(Collections.emptyList());
 
        UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> {
-           service.findAllUsers();
+           userService.findAllUsers();
        });
 
         MatcherAssert.assertThat(exception, notNullValue());
@@ -74,7 +74,7 @@ public class UserServiceTest {
     void findUserByIdWithSuccess(){
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
-        UserDTO result = service.findUserById(user.getId());
+        UserDTO result = userService.findUserById(user.getId());
 
         assertNotNull(result);
         assertEquals(user.getId(), result.id());
@@ -90,7 +90,7 @@ public class UserServiceTest {
         when(userRepository.findById(user.getId())).thenReturn(Optional.empty());
 
         UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> {
-            service.findUserById(user.getId());
+            userService.findUserById(user.getId());
         });
 
         MatcherAssert.assertThat(exception, notNullValue());
@@ -106,7 +106,7 @@ public class UserServiceTest {
     void createUserWithSuccess(){
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        UserDTO result = service.createUser(createUserDTO);
+        UserDTO result = userService.createUser(createUserDTO);
 
         assertNotNull(result);
         assertEquals(userDTO.userName(), result.userName());
@@ -120,7 +120,7 @@ public class UserServiceTest {
         CreateUserDTO invalidDto = new CreateUserDTO(null, null, null);
 
         ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () -> {
-            service.createUser(invalidDto);
+            userService.createUser(invalidDto);
         });
 
         MatcherAssert.assertThat(exception, notNullValue());
@@ -135,7 +135,7 @@ public class UserServiceTest {
     void updateUserWithSuccess(){
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
-        UserDTO result = service.updateUser(user.getId(), editUserDTO);
+        UserDTO result = userService.updateUser(user.getId(), editUserDTO);
 
         assertNotNull(result);
         assertEquals(editUserDTO.userName(), result.userName());
@@ -151,7 +151,7 @@ public class UserServiceTest {
         when(userRepository.findById(user.getId())).thenReturn(Optional.empty());
 
         UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> {
-            service.updateUser(user.getId(), editUserDTO);
+            userService.updateUser(user.getId(), editUserDTO);
         });
 
         MatcherAssert.assertThat(exception, notNullValue());
@@ -166,7 +166,7 @@ public class UserServiceTest {
     void deleteUserWithSuccess(){
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
-        service.deleteUser(user.getId());
+        userService.deleteUser(user.getId());
 
         verify(userRepository).findById(user.getId());
         verify(userRepository).delete(user);
@@ -178,7 +178,7 @@ public class UserServiceTest {
         when(userRepository.findById(user.getId())).thenReturn(Optional.empty());
 
         UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> {
-            service.deleteUser(user.getId());
+            userService.deleteUser(user.getId());
         });
 
         MatcherAssert.assertThat(exception, notNullValue());
