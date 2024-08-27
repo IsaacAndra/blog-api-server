@@ -3,7 +3,6 @@ package com.isaacandrade.blog.service;
 import com.isaacandrade.blog.domain.user.*;
 import com.isaacandrade.blog.exception.ConstraintViolationException;
 import com.isaacandrade.blog.exception.UserNotFoundException;
-import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Example;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +33,7 @@ public class UserServiceTest {
     CreateUserDTO createUserDTO;
     EditUserDTO editUserDTO;
 
+    //------------Setup the MOCKS----------------------------------------------------------------------
     @BeforeEach
     public void setUp(){
         user = new User(0L ,"Felipe", "teste@gmail.com", "qualquer");
@@ -43,7 +42,8 @@ public class UserServiceTest {
         editUserDTO = new EditUserDTO("Felipe", "teste@gmail.com", "admin123");
     }
 
-    //----------TestFindAllUsers-----------
+
+    //----------TestsFindAllUsers-----------
     @Test
     void findAllUserWithSuccess(){
         when(userRepository.findAll()).thenReturn(Collections.singletonList(user));
@@ -69,7 +69,8 @@ public class UserServiceTest {
         verifyNoMoreInteractions(userRepository);
     }
 
-    //----------TestFindUserById-----------
+
+    //----------TestsFindUserById-----------
     @Test
     void findUserByIdWithSuccess(){
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
@@ -100,8 +101,8 @@ public class UserServiceTest {
         verifyNoMoreInteractions(userRepository);
     }
 
-    //----------TestCreateUser-----------
 
+    //----------TestsCreateUser-----------
     @Test
     void createUserWithSuccess(){
         when(userRepository.save(any(User.class))).thenReturn(user);
@@ -130,7 +131,8 @@ public class UserServiceTest {
         verify(userRepository, never()).save(any(User.class));
     }
 
-    //----------TestUpdateUser-----------
+
+    //----------TestsUpdateUser-----------
     @Test
     void updateUserWithSuccess(){
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
@@ -161,7 +163,8 @@ public class UserServiceTest {
         verifyNoMoreInteractions(userRepository);
     }
 
-    //----------TestDeleteUser-----------
+
+    //----------TestsDeleteUser-----------
     @Test
     void deleteUserWithSuccess(){
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
