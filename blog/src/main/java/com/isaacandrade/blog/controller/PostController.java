@@ -1,5 +1,6 @@
 package com.isaacandrade.blog.controller;
 
+import com.isaacandrade.blog.domain.post.AuthorWithPostsDTO;
 import com.isaacandrade.blog.domain.post.CreatePostDTO;
 import com.isaacandrade.blog.domain.post.EditPostDTO;
 import com.isaacandrade.blog.domain.post.PostDTO;
@@ -20,8 +21,14 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<List<PostDTO>> findAllPosts(){
-        List<PostDTO> posts = postService.findAll();
+        List<PostDTO> posts = postService.findAllActives();
         return ResponseEntity.ok(posts);
+    }
+
+    @GetMapping("/author/{authorId}")
+    public ResponseEntity<AuthorWithPostsDTO> getPostsByAuthor(@PathVariable Long authorId){
+        AuthorWithPostsDTO postsByAuthor = postService.findPostsWithAuthorId(authorId);
+        return ResponseEntity.ok(postsByAuthor);
     }
 
     @GetMapping("/{id}")
@@ -32,8 +39,8 @@ public class PostController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<PostDTO> createPost(@RequestBody CreatePostDTO data){
-        PostDTO creatingPost = postService.createPost(data);
+    public ResponseEntity<PostDTO> createPost(@RequestBody CreatePostDTO data, @RequestParam Long authorId){
+        PostDTO creatingPost = postService.createPost(data, authorId);
         return new ResponseEntity<>(creatingPost, HttpStatus.CREATED);
     }
 

@@ -1,12 +1,14 @@
 package com.isaacandrade.blog.domain.post;
 
+import com.isaacandrade.blog.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Entity(name = "post")
 @Table(name = "posts")
@@ -26,8 +28,11 @@ public class Post {
     private String content;
 
     @Column(name = "created_at")
-    @Temporal(TemporalType.DATE)
-    private Date createdAt;
+    private LocalDateTime createdAt;
+
+    @JoinColumn(name = "author_id", nullable = false)
+    @ManyToOne
+    private User author;
 
     @Column(name = "is_active")
     private Boolean isActive;
@@ -35,7 +40,6 @@ public class Post {
     public Post(CreatePostDTO data) {
         this.title = data.title();
         this.content = data.content();
-        this.createdAt = data.createdAt();
         this.isActive = data.isActive();
     }
 
@@ -46,12 +50,11 @@ public class Post {
         if (data.content() != null){
             this.content = data.content();
         }
-        if (data.isActive() != null){
-            this.isActive = data.isActive();
-        }
     }
 
     public void delete() {
         this.isActive = false;
     }
+
+
 }
