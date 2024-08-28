@@ -1,10 +1,12 @@
-package com.isaacandrade.blog.service;
+package com.isaacandrade.blog.unittests;
 
 import com.isaacandrade.blog.domain.post.*;
 import com.isaacandrade.blog.domain.user.User;
 import com.isaacandrade.blog.domain.user.UserDTO;
 import com.isaacandrade.blog.exception.ConstraintViolationException;
 import com.isaacandrade.blog.exception.PostNotFoundException;
+import com.isaacandrade.blog.service.PostService;
+import com.isaacandrade.blog.service.UserService;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,7 @@ import static org.mockito.Mockito.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 public class PostServiceTest {
     @InjectMocks
     PostService postService;

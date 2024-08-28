@@ -37,12 +37,6 @@ public class Post {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    public Post(CreatePostDTO data) {
-        this.title = data.title();
-        this.content = data.content();
-        this.isActive = data.isActive();
-    }
-
     public void updatePost(EditPostDTO data) {
         if (data.title() != null){
             this.title = data.title();
