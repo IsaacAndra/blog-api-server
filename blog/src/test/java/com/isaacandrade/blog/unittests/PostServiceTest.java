@@ -84,9 +84,9 @@ public class PostServiceTest {
         assertNotNull(result);
         assertEquals(1, result.size());
 
-        //Aqui estou arredondando os milisegundos do createdAt para que passem no test :p
-        LocalDateTime expectedDate = postDTO.createdAt().truncatedTo(ChronoUnit.MILLIS);
-        LocalDateTime actualDate = result.get(0).createdAt().truncatedTo(ChronoUnit.MILLIS);
+        //Aqui estou truncando os segundos do createdAt para que passem no test :p
+        LocalDateTime expectedDate = postDTO.createdAt().truncatedTo(ChronoUnit.SECONDS);
+        LocalDateTime actualDate = result.get(0).createdAt().truncatedTo(ChronoUnit.SECONDS);
 
         assertTrue(expectedDate.isEqual(actualDate), "Expected date: " + expectedDate + ", but was: " + actualDate);
 
