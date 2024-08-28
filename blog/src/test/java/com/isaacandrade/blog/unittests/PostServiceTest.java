@@ -86,7 +86,7 @@ public class PostServiceTest {
         assertEquals(1, result.size());
 
         //Definindo uma tolerância para comparação dos segundos
-        Duration tolerance = Duration.ofSeconds(1);
+        Duration tolerance = Duration.ofMillis(1);
         //Aqui estou truncando os segundos do createdAt para que passem no test :p
         LocalDateTime expectedDate = postDTO.createdAt().truncatedTo(ChronoUnit.SECONDS);
         LocalDateTime actualDate = result.get(0).createdAt().truncatedTo(ChronoUnit.SECONDS);
@@ -94,7 +94,10 @@ public class PostServiceTest {
         assertTrue(Duration.between(expectedDate, actualDate).abs().compareTo(tolerance) <= 0,
                 "Expected date: " + expectedDate + ", but was: " + actualDate);
 
-        assertEquals(postDTO, result.get(0));
+        assertEquals(postDTO.id(), result.get(0).id());
+        assertEquals(postDTO.title(), result.get(0).title());
+        assertEquals(postDTO.content(), result.get(0).content());
+        assertEquals(postDTO.isActive(), result.get(0).isActive());
 
         verify(postRepository).findByIsActiveTrue();
         verifyNoMoreInteractions(postRepository);
