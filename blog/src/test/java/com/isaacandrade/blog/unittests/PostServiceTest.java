@@ -21,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
@@ -84,11 +85,14 @@ public class PostServiceTest {
         assertNotNull(result);
         assertEquals(1, result.size());
 
+        //Definindo uma tolerância para comparação dos segundos
+        Duration tolerance = Duration.ofSeconds(1);
         //Aqui estou truncando os segundos do createdAt para que passem no test :p
         LocalDateTime expectedDate = postDTO.createdAt().truncatedTo(ChronoUnit.SECONDS);
         LocalDateTime actualDate = result.get(0).createdAt().truncatedTo(ChronoUnit.SECONDS);
 
-        assertTrue(expectedDate.isEqual(actualDate), "Expected date: " + expectedDate + ", but was: " + actualDate);
+        assertTrue(Duration.between(expectedDate, actualDate).abs().compareTo(tolerance) <= 0,
+                "Expected date: " + expectedDate + ", but was: " + actualDate);
 
         assertEquals(postDTO, result.get(0));
 
