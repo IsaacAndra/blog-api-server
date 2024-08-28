@@ -22,6 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -82,6 +83,13 @@ public class PostServiceTest {
 
         assertNotNull(result);
         assertEquals(1, result.size());
+
+        //Aqui estou arredondando os milisegundos do createdAt para que passem no test :p
+        LocalDateTime expectedDate = postDTO.createdAt().truncatedTo(ChronoUnit.MILLIS);
+        LocalDateTime actualDate = result.get(0).createdAt().truncatedTo(ChronoUnit.MILLIS);
+
+        assertTrue(expectedDate.isEqual(actualDate), "Expected date: " + expectedDate + ", but was: " + actualDate);
+
         assertEquals(postDTO, result.get(0));
 
         verify(postRepository).findByIsActiveTrue();
