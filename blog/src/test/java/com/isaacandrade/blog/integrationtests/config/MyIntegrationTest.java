@@ -3,6 +3,8 @@ import com.isaacandrade.blog.BlogApplication;
 import com.isaacandrade.blog.domain.post.PostRepository;
 import com.isaacandrade.blog.domain.user.UserRepository;
 import com.isaacandrade.blog.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,7 +47,7 @@ public class MyIntegrationTest {
     }
 
     @BeforeEach
-    public void setUp() throws InterruptedException {
+    public void setUp() {
         //Deletando todas as tabelas para que o flyway faça seu trabalho com as migrations durante os testes
         postRepository.deleteAll();
         userRepository.deleteAll();
