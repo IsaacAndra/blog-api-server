@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
-public class UserServiceTest {
+public class UserServiceUnitTest {
     @InjectMocks
     UserService userService;
 
