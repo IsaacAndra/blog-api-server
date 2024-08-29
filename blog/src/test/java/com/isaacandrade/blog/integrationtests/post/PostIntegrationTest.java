@@ -68,8 +68,8 @@ public class PostIntegrationTest extends MyIntegrationTest {
     void findPostsWithAuthorIdWithSuccess(){
         //Aqui estou criando um usuário para que seja o author do post
         CreateUserDTO newUser = new CreateUserDTO("Isaac", "isaactest@gmail.com", "isaactest123");
-        Long userId = 1L;
-            userService.createUser(newUser);
+        UserDTO userCreated = userService.createUser(newUser);
+        Long userId = userCreated.id();
 
         //Verificando se o usuário foi criado
         assertNotNull(newUser);
