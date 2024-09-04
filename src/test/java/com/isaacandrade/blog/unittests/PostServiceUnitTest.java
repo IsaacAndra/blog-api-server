@@ -3,6 +3,7 @@ package com.isaacandrade.blog.unittests;
 import com.isaacandrade.blog.domain.post.*;
 import com.isaacandrade.blog.domain.user.User;
 import com.isaacandrade.blog.domain.user.UserDTO;
+import com.isaacandrade.blog.domain.user.UserRole;
 import com.isaacandrade.blog.exception.ConstraintViolationException;
 import com.isaacandrade.blog.exception.PostNotFoundException;
 import com.isaacandrade.blog.service.PostService;
@@ -55,7 +56,7 @@ public class PostServiceUnitTest {
     //------------Setup the MOCKS----------------------------------------------------------------------
     @BeforeEach
     public void setUp(){
-        author = new User(1L, "Felipe", "teste@gmail.com","admin123");
+        author = new User(1L, "Felipe", "teste@gmail.com","admin123", UserRole.USER);
         authorDTO = new UserDTO(1L, "teste@gmail.com", "Felipe");
 
         Post post1 = new Post(1L, "Title 1", "Content 1", LocalDateTime.now(), new User(), true);

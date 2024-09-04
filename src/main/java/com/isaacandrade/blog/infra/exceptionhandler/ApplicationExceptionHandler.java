@@ -1,4 +1,4 @@
-package com.isaacandrade.blog.infra;
+package com.isaacandrade.blog.infra.exceptionhandler;
 
 import com.isaacandrade.blog.exception.ConstraintViolationException;
 import com.isaacandrade.blog.exception.PostNotFoundException;

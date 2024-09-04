@@ -5,7 +5,7 @@ import com.isaacandrade.blog.domain.user.User;
 import com.isaacandrade.blog.domain.user.UserDTO;
 import com.isaacandrade.blog.exception.ConstraintViolationException;
 import com.isaacandrade.blog.exception.PostNotFoundException;
-import com.isaacandrade.blog.infra.ApplicationExceptionHandler;
+import com.isaacandrade.blog.infra.exceptionhandler.ApplicationExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,12 +88,12 @@ public class PostService {
         User user = new User();
         user.setId(userDTO.id());
         user.setEmail(userDTO.email());
-        user.setUserName(userDTO.userName());
+        user.setUserName(String.valueOf(userDTO.userName()));
         return user;
     }
 
     private PostDTO mapToPostDTO(Post post) {
-        UserDTO authorDTO = new UserDTO(post.getAuthor().getId(), post.getAuthor().getEmail(), post.getAuthor().getUserName());
+        UserDTO authorDTO = new UserDTO(post.getAuthor().getId(), post.getAuthor().getEmail(), post.getAuthor().getUsername());
         return new PostDTO(
                 post.getId(),
                 post.getTitle(),

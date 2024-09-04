@@ -19,12 +19,12 @@ public class SwaggerIntegrationTest extends MyIntegrationTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    void SwaggerUiLoads(){
+    void SwaggerUiForbbiden(){
         ResponseEntity<String> response = testRestTemplate.getForEntity("/swagger-ui/index.html", String.class);
-        assertEquals(HttpStatus.OK, response.getStatusCode(), "Swagger deve estar acessível");
+        assertEquals(HttpStatus.OK, response.getStatusCode(), "Swagger deve estar acessível!");
 
         ResponseEntity<String> apiDocsResponse = testRestTemplate.getForEntity("/v3/api-docs", String.class);
-        assertEquals(HttpStatus.OK, apiDocsResponse.getStatusCode(), "Swagger API Docs deve estar acessível");
+        assertEquals(HttpStatus.OK, apiDocsResponse.getStatusCode(), "Swagger API Docs deve estar acessível!");
 
     }
 }

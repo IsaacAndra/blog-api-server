@@ -4,6 +4,7 @@ import com.isaacandrade.blog.domain.user.*;
 import com.isaacandrade.blog.exception.ConstraintViolationException;
 import com.isaacandrade.blog.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,10 +36,18 @@ public class UserService {
     }
 
     public UserDTO createUser(CreateUserDTO data){
-        User user = new User(data);
-        if (data.userName() == null || data.email() == null || data.passWord() == null){
-            throw new ConstraintViolationException("username, email and password cannot be null!");
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(data.passWord());
+        CreateUserDTO newUser = new CreateUserDTO(data.userName(), data.email(), encryptedPassword, data.role());
+
+        if (userRepository.findByUserName(data.userName()) != null){
+            throw new ConstraintViolationException("This username already exist!");
         }
+        if (data.userName() == null || data.email() == null || data.passWord() == null || data.role() == null){
+            throw new ConstraintViolationException("Username, email, password and role cannot be null!");
+        }
+
+        User user = new User(newUser);
         User savedUser = userRepository.save(user);
 
         return mapToUserDTO(savedUser);
@@ -49,6 +58,7 @@ public class UserService {
                 .findById(id)
                 .orElseThrow(
                         () -> new UserNotFoundException("User With Id "  + id + " Was Not Found!"));
+
         user.updateUser(data);
         userRepository.save(user);
 
@@ -64,7 +74,7 @@ public class UserService {
     }
 
     private UserDTO mapToUserDTO(User user) {
-        return new UserDTO(user.getId(), user.getEmail(), user.getUserName());
+        return new UserDTO(user.getId(), user.getEmail(), user.getUsername());
     }
 
 }

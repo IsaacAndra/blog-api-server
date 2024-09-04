@@ -8,7 +8,10 @@ public record EditUserDTO(
         @JsonProperty("email")
         String email,
         @JsonProperty("senha")
-        String passWord
+        String passWord,
+        @JsonProperty("role")
+        UserRole role
+
 ) {
 
 }

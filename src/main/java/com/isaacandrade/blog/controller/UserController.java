@@ -1,6 +1,5 @@
 package com.isaacandrade.blog.controller;
 
-import com.isaacandrade.blog.domain.post.PostDTO;
 import com.isaacandrade.blog.domain.user.CreateUserDTO;
 import com.isaacandrade.blog.domain.user.EditUserDTO;
 import com.isaacandrade.blog.domain.user.UserDTO;
@@ -13,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
@@ -97,13 +97,12 @@ public class UserController {
                             content = @Content(schema = @Schema(implementation = UserDTO.class))
                     ),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unautorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
             }
     )
-    public ResponseEntity<UserDTO> createUser(@RequestBody CreateUserDTO data) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody @Valid CreateUserDTO data) {
         UserDTO creatingUser = userService.createUser(data);
-
         return new ResponseEntity<>(creatingUser, HttpStatus.CREATED);
     }
 
@@ -123,7 +122,7 @@ public class UserController {
                             content = @Content(schema = @Schema(implementation = UserDTO.class))
                     ),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unautorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
             }
@@ -143,7 +142,7 @@ public class UserController {
             responses = {
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unautorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
             }
