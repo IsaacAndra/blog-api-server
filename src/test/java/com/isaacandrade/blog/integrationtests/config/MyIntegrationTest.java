@@ -3,6 +3,7 @@ import com.isaacandrade.blog.BlogApplication;
 import com.isaacandrade.blog.domain.post.PostRepository;
 import com.isaacandrade.blog.domain.user.UserRepository;
 import com.isaacandrade.blog.service.UserService;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SpringBootTest(classes = BlogApplication.class)
 @Testcontainers
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class MyIntegrationTest {
+public abstract class MyIntegrationTest {
 
     @Autowired
     private UserRepository userRepository;
@@ -26,6 +27,7 @@ public class MyIntegrationTest {
     private UserService userService;
     @Autowired
     private PostRepository postRepository;
+
 
 
     @Container
@@ -46,9 +48,15 @@ public class MyIntegrationTest {
 
     @BeforeEach
     public void setUp() {
+        postgres.start();
         //Deletando todas as tabelas para que o flyway faça seu trabalho com as migrations durante os testes
         postRepository.deleteAll();
         userRepository.deleteAll();
+    }
+
+    @AfterAll
+    public static void stopPostgresContainer(){
+        postgres.stop();
     }
 
 }
