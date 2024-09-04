@@ -3,10 +3,10 @@ package com.isaacandrade.blog.integrationtests.post;
 import com.isaacandrade.blog.domain.post.*;
 import com.isaacandrade.blog.domain.user.CreateUserDTO;
 import com.isaacandrade.blog.domain.user.UserDTO;
+import com.isaacandrade.blog.domain.user.UserRole;
 import com.isaacandrade.blog.integrationtests.config.MyIntegrationTest;
 import com.isaacandrade.blog.service.PostService;
 import com.isaacandrade.blog.service.UserService;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
@@ -27,7 +27,7 @@ public class PostIntegrationTest extends MyIntegrationTest {
     @Test
     void findAllPostsWithsucces() {
         //Aqui estou criando um usuário para que seja o author dos posts
-        CreateUserDTO newUser = new CreateUserDTO("Isaac", "isaactest@gmail.com", "isaactest123");
+        CreateUserDTO newUser = new CreateUserDTO("Isaac", "isaactest@gmail.com", "isaactest123", UserRole.ADMIN);
         UserDTO userFounded = userService.createUser(newUser);
         Long userId = userFounded.id();
 
@@ -67,7 +67,7 @@ public class PostIntegrationTest extends MyIntegrationTest {
     @Test
     void findPostsWithAuthorIdWithSuccess(){
         //Aqui estou criando um usuário para que seja o author do post
-        CreateUserDTO newUser = new CreateUserDTO("Isaac", "isaactest@gmail.com", "isaactest123");
+        CreateUserDTO newUser = new CreateUserDTO("Isaac", "isaactest@gmail.com", "isaactest123" , UserRole.ADMIN);
         UserDTO userCreated = userService.createUser(newUser);
         Long userId = userCreated.id();
 
@@ -118,7 +118,7 @@ public class PostIntegrationTest extends MyIntegrationTest {
     @Test
     void createAPostWithSuccess(){
         //Aqui estou criando um usuário para que seja o author dos posts
-        CreateUserDTO newUser = new CreateUserDTO("Isaac", "isaactest@gmail.com", "isaactest123");
+        CreateUserDTO newUser = new CreateUserDTO("Isaac", "isaactest@gmail.com", "isaactest123", UserRole.ADMIN);
         UserDTO userFounded = userService.createUser(newUser);
         Long userId = userFounded.id();
 
@@ -141,7 +141,7 @@ public class PostIntegrationTest extends MyIntegrationTest {
     @Test
     void updatePostWithSuccess(){
         //Aqui estou criando um usuário para que seja o author dos posts
-        CreateUserDTO newUser = new CreateUserDTO("Isaac", "isaactest@gmail.com", "isaactest123");
+        CreateUserDTO newUser = new CreateUserDTO("Isaac", "isaactest@gmail.com", "isaactest123", UserRole.ADMIN);
         UserDTO userFounded = userService.createUser(newUser);
         Long userId = userFounded.id();
 
@@ -172,7 +172,7 @@ public class PostIntegrationTest extends MyIntegrationTest {
     @Test
     void deletePostWithSuccess(){
         //Aqui estou criando um usuário para que seja o author dos posts
-        CreateUserDTO newUser = new CreateUserDTO("Isaac", "isaactest@gmail.com", "isaactest123");
+        CreateUserDTO newUser = new CreateUserDTO("Isaac", "isaactest@gmail.com", "isaactest123", UserRole.ADMIN);
         UserDTO userFounded = userService.createUser(newUser);
         Long userId = userFounded.id();
 

@@ -39,10 +39,10 @@ public class UserServiceUnitTest {
     //------------Setup the MOCKS----------------------------------------------------------------------
     @BeforeEach
     public void setUp(){
-        user = new User(0L ,"Felipe", "teste@gmail.com", "qualquer");
+        user = new User(0L ,"Felipe", "teste@gmail.com", "qualquer", UserRole.USER);
         userDTO = new UserDTO(0L, "teste@gmail.com", "Felipe");
-        createUserDTO = new CreateUserDTO("Felipe", "teste@gmail.com", "admin123");
-        editUserDTO = new EditUserDTO("Felipe", "teste@gmail.com", "admin123");
+        createUserDTO = new CreateUserDTO("Felipe", "teste@gmail.com", "admin123", UserRole.ADMIN);
+        editUserDTO = new EditUserDTO("Felipe", "teste@gmail.com", "admin123", UserRole.ADMIN);
     }
 
 
@@ -82,7 +82,7 @@ public class UserServiceUnitTest {
 
         assertNotNull(result);
         assertEquals(user.getId(), result.id());
-        assertEquals(user.getUserName(), result.userName());
+        assertEquals(user.getUsername(), result.userName());
         assertEquals(user.getEmail(), result.email());
 
         verify(userRepository).findById(user.getId());
@@ -121,14 +121,14 @@ public class UserServiceUnitTest {
 
     @Test
     void createUserWithNullValuesShouldThrowExeption(){
-        CreateUserDTO invalidDto = new CreateUserDTO(null, null, null);
+        CreateUserDTO invalidDto = new CreateUserDTO(null, null, "any", null);
 
         ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () -> {
             userService.createUser(invalidDto);
         });
 
         MatcherAssert.assertThat(exception, notNullValue());
-        MatcherAssert.assertThat(exception.getMessage(), is("username, email and password cannot be null!"));
+        MatcherAssert.assertThat(exception.getMessage(), is("Username, email, password and role cannot be null!"));
         //assertEquals("username, email and password cannot be null!", exception.getMessage());
 
         verify(userRepository, never()).save(any(User.class));

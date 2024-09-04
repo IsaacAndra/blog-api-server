@@ -3,6 +3,7 @@ package com.isaacandrade.blog.integrationtests.user;
 import com.isaacandrade.blog.domain.user.CreateUserDTO;
 import com.isaacandrade.blog.domain.user.EditUserDTO;
 import com.isaacandrade.blog.domain.user.UserDTO;
+import com.isaacandrade.blog.domain.user.UserRole;
 import com.isaacandrade.blog.exception.UserNotFoundException;
 import com.isaacandrade.blog.integrationtests.config.MyIntegrationTest;
 import com.isaacandrade.blog.service.UserService;
@@ -25,9 +26,9 @@ public class UserIntegrationTest extends MyIntegrationTest {
     @Test
     void findAllUsersWithSuccess(){
         //Aqui vamos criar 2 users para serem encontrados pelo findAllUsers
-        CreateUserDTO user1 = new CreateUserDTO( "André", "andretest@gmail.com", "andre123");
+        CreateUserDTO user1 = new CreateUserDTO( "André", "andretest@gmail.com", "andre123", UserRole.ADMIN);
         userService.createUser(user1);
-        CreateUserDTO user2 = new CreateUserDTO( "Felipe", "felipeteste@gmail.com", "felipe123");
+        CreateUserDTO user2 = new CreateUserDTO( "Felipe", "felipeteste@gmail.com", "felipe123", UserRole.ADMIN);
         userService.createUser(user2);
 
         //Verificando se os usuários foram criados
@@ -54,7 +55,7 @@ public class UserIntegrationTest extends MyIntegrationTest {
     @Test
     void findUserByIdWithSuccess(){
         //Criando um novo usuário
-        CreateUserDTO user1 = new CreateUserDTO( "André", "andretest@gmail.com", "andre123");
+        CreateUserDTO user1 = new CreateUserDTO( "André", "andretest@gmail.com", "andre123", UserRole.ADMIN);
         UserDTO createdUser = userService.createUser(user1);
         Long userId = createdUser.id();
 
@@ -76,7 +77,8 @@ public class UserIntegrationTest extends MyIntegrationTest {
         CreateUserDTO newUser = new CreateUserDTO(
                 "Carlos",
                 "carlostest@gmail.com",
-                "carlos123"
+                "carlos123",
+                UserRole.ADMIN
         );
 
         UserDTO createdUser = userService.createUser(newUser);
@@ -97,11 +99,11 @@ public class UserIntegrationTest extends MyIntegrationTest {
     @Test
     void updateUserWithSuccess(){
         //Primeiro vamos criar um usuário para que seja editado.
-        CreateUserDTO newUser = new CreateUserDTO("Joao", "joaotest@gmail.com", "joao123");
+        CreateUserDTO newUser = new CreateUserDTO("Joao", "joaotest@gmail.com", "joao123", UserRole.ADMIN);
         UserDTO createdUser = userService.createUser(newUser);
 
         //Agora vamos editar os dados desse usuário para novos:
-        EditUserDTO editedUser = new EditUserDTO("Felix", "felixtest@gmail.com", "felix123");
+        EditUserDTO editedUser = new EditUserDTO("Felix", "felixtest@gmail.com", "felix123", UserRole.ADMIN);
         UserDTO updatedUser = userService.updateUser(createdUser.id(), editedUser);
 
         //Verificando se o usuário foi editado corretamente
@@ -115,7 +117,7 @@ public class UserIntegrationTest extends MyIntegrationTest {
     @Test
     void deleteUserWithSuccess(){
         //Iremos criar um usuário para ser excluído
-        CreateUserDTO newUser = new CreateUserDTO("Jonas", "jonastest@gmail.com", "jonas123");
+        CreateUserDTO newUser = new CreateUserDTO("Jonas", "jonastest@gmail.com", "jonas123", UserRole.ADMIN);
         UserDTO createdUser = userService.createUser(newUser);
         Long userId = createdUser.id();
 
