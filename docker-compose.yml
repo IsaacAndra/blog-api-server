@@ -15,10 +15,7 @@ services:
   blog_api_server:
     image: isaacandra/blog-api-server
     restart: always
-    build:
-      context: .
-      dockerfile: blog-api-server/Dockerfile
-    working_dir: /blog-api-server
+    build: .
     environment:
       TZ: America/Sao_Paulo
       SPRING.DATASOURCE.URL: jdbc:postgresql://postgres:5432/blog
