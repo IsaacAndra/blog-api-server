@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: blog
+    ports:
+      - '5433:5432'
+    networks:
+      - dev-network
+  blog_api_server:
+    image: isaacandra/blog-api-server
+    restart: always
+    build: ./blog-api-server
+    working_dir: /blog-api-server
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING.DATASOURCE.URL: jdbc:postgresql://postgres:5432/blog
+      SPRING.DATASOURCE.USERNAME: docker
+      SPRING.DATASOURCE.PASSWORD: admin123
+      API.SECURITY.TOKEN.SECRET: token
+    ports:
+      - 80:80
+    command: mvn spring-boot:run
+    depends_on:
+      - postgres
+    networks:
+      - dev-network
+
+
+networks:
+  dev-network:
+    driver: bridge
