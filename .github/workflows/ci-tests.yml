@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time.
 # Run every test
 
-name: CI PipeLine
+name: CI Tests PipeLine
 
 on: [ push, pull_request ]
 
