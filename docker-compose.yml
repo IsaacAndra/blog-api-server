@@ -16,7 +16,9 @@ services:
   blog_api_server:
     image: isaacandra/blog-api-server
     restart: always
-    build: ./blog-api-server
+    build:
+      context: .
+      dockerfile: blog-api-server/Dockerfile
     working_dir: /blog-api-server
     environment:
       TZ: America/Sao_Paulo
