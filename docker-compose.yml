@@ -18,7 +18,7 @@ services:
     build:
       context: .
       dockerfile: blog-api-server/Dockerfile
-    working_dir: /blog-api-server
+    working_dir: /app
     environment:
       TZ: America/Sao_Paulo
       SPRING.DATASOURCE.URL: jdbc:postgresql://postgres:5432/blog
