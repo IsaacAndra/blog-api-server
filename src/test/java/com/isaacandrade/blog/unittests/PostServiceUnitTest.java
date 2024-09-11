@@ -57,7 +57,7 @@ public class PostServiceUnitTest {
     @BeforeEach
     public void setUp(){
         author = new User(1L, "Felipe", "teste@gmail.com","admin123", UserRole.USER);
-        authorDTO = new UserDTO(1L, "teste@gmail.com", "Felipe");
+        authorDTO = new UserDTO(1L, "teste@gmail.com", "Felipe", UserRole.ADMIN);
 
         Post post1 = new Post(1L, "Title 1", "Content 1", LocalDateTime.now(), new User(), true);
         Post post2 = new Post(2L, "Title 2", "Content 2", LocalDateTime.now(), new User(), false);

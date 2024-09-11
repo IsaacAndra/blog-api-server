@@ -39,8 +39,8 @@ public class UserServiceUnitTest {
     //------------Setup the MOCKS----------------------------------------------------------------------
     @BeforeEach
     public void setUp(){
-        user = new User(0L ,"Felipe", "teste@gmail.com", "qualquer", UserRole.USER);
-        userDTO = new UserDTO(0L, "teste@gmail.com", "Felipe");
+        user = new User(0L ,"Felipe", "teste@gmail.com", "qualquer", UserRole.ADMIN);
+        userDTO = new UserDTO(0L, "teste@gmail.com", "Felipe", UserRole.ADMIN);
         createUserDTO = new CreateUserDTO("Felipe", "teste@gmail.com", "admin123", UserRole.ADMIN);
         editUserDTO = new EditUserDTO("Felipe", "teste@gmail.com", "admin123", UserRole.ADMIN);
     }
