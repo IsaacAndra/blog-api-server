@@ -32,15 +32,12 @@ jobs:
   
   
     - name: Build Application JAR
-      working-directory: .
       run:  mvn clean package
 
     - name: List files
-      working-directory: .
       run:  ls -R
 
     - name: Docker Compose Build
-      working-directory: .
       run:  docker compose build
 
 
