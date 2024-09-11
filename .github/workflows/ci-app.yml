@@ -32,15 +32,15 @@ jobs:
   
   
     - name: Build Application JAR
-      working-directory: ./blog-api-server
+      working-directory: ./home/runner/work/blog-api-server
       run:  mvn clean package
 
     - name: List files
-      working-directory: ./blog-api-server
+      working-directory: ./home/runner/work/blog-api-server
       run:  ls -R
 
     - name: Docker Compose Build
-      working-directory: ./blog-api-server
+      working-directory: ./home/runner/work/blog-api-server
       run:  docker compose build
 
 
