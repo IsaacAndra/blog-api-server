@@ -36,6 +36,7 @@ jobs:
 
     - name: Docker Compose Build
       run:  docker compose build
+      working-directory: ./blog-api-server
 
     - name: Push to Docker Hub Container Registry
       run: |
