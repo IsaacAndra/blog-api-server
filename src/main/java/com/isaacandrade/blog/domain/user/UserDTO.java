@@ -14,7 +14,9 @@ public record UserDTO(
         String email,
 
         @JsonProperty("username")
-        String userName
+        String userName,
+        @JsonProperty("role")
+        UserRole role
 
 
 ) {

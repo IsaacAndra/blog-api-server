@@ -74,7 +74,7 @@ public class UserService {
     }
 
     private UserDTO mapToUserDTO(User user) {
-        return new UserDTO(user.getId(), user.getEmail(), user.getUsername());
+        return new UserDTO(user.getId(), user.getEmail(), user.getUsername(), user.getRole());
     }
 
 }

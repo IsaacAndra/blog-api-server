@@ -93,7 +93,7 @@ public class PostService {
     }
 
     private PostDTO mapToPostDTO(Post post) {
-        UserDTO authorDTO = new UserDTO(post.getAuthor().getId(), post.getAuthor().getEmail(), post.getAuthor().getUsername());
+        UserDTO authorDTO = new UserDTO(post.getAuthor().getId(), post.getAuthor().getEmail(), post.getAuthor().getUsername(), post.getAuthor().getRole());
         return new PostDTO(
                 post.getId(),
                 post.getTitle(),
