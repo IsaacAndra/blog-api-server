@@ -1,6 +1,8 @@
 name: CI App PipeLine
 
-on: [ push, pull_request ]
+on:
+  push:
+    branches: [ "prod" ]
 
 jobs:
   app:
