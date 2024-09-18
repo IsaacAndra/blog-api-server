@@ -33,6 +33,18 @@ jobs:
       with: 
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+    - name: Login to Amazon ECR Private
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
   
   
     - name: Build Application JAR
@@ -43,6 +55,15 @@ jobs:
 
     - name: Docker Compose Build
       run:  docker compose build
+
+
+    - name: Tag and push docker image to Amazon ECR
+      run: |
+        docker tag ${{ secrets.DOCKER_USERNAME }}/blog-api-server:latest ${{ secrets.IMAGE_REPO_URL }}:${{ github.run_id }}
+        docker tag ${{ secrets.DOCKER_USERNAME }}/blog-api-server:latest ${{ secrets.IMAGE_REPO_URL }}:latest
+        
+        docker push ${{ secrets.IMAGE_REPO_URL }}:${{ github.run_id }}
+        docker push ${{ secrets.IMAGE_REPO_URL }}:latest
 
 
     - name: Push to Docker Hub Container Registry
