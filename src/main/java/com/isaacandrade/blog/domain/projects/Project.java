@@ -1,6 +1,7 @@
 package com.isaacandrade.blog.domain.projects;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaacandrade.blog.domain.technologies.Technology;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,12 +23,13 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "name")
+    private String name;
     @Column(name = "description")
     private String description;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Technology> technologies;
 
     @Column(name = "url")
@@ -35,7 +37,6 @@ public class Project {
 
     @Column(name = "url_github")
     private String urlGitHub;
-
 
 
 }
