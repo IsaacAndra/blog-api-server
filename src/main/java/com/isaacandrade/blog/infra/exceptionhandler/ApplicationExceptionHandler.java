@@ -2,9 +2,11 @@ package com.isaacandrade.blog.infra.exceptionhandler;
 
 import com.isaacandrade.blog.exception.ConstraintViolationException;
 import com.isaacandrade.blog.exception.PostNotFoundException;
+import com.isaacandrade.blog.exception.ProjectNotFoundException;
 import com.isaacandrade.blog.exception.UserNotFoundException;
 import com.isaacandrade.blog.exception.message.ConstraintViolationMessage;
 import com.isaacandrade.blog.exception.message.PostNotFoundMessage;
+import com.isaacandrade.blog.exception.message.ProjectNotFoundMessage;
 import com.isaacandrade.blog.exception.message.UserNotFoundMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,12 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<UserNotFoundMessage> userNotFoundHandler(UserNotFoundException e){
         UserNotFoundMessage threatResponse = new UserNotFoundMessage(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
+    }
+
+    @ExceptionHandler(ProjectNotFoundException.class)
+    public ResponseEntity<ProjectNotFoundMessage> projectNotFoundHandler(ProjectNotFoundException e) {
+        ProjectNotFoundMessage threatResponse = new ProjectNotFoundMessage(HttpStatus.NOT_FOUND.value(), e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
     }
 }
