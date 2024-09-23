@@ -41,7 +41,7 @@ public class TechnologyController {
             tags = {"Tecnologias"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Technology.class))
+                            content = @Content(schema = @Schema(implementation = CreateTechnologyDto.class))
                     ),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
@@ -52,30 +52,6 @@ public class TechnologyController {
         TechnologyDto createdTechnology = technologyService.createTechnology(data);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTechnology);
-    }
-
-    // Endpoint para obter uma tecnologia pelo ID
-    @GetMapping(
-            value = "/{id}",
-            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML}
-    )
-    @Operation(summary = "Encontre a Tecnologia pelo Id", description = "Encontre a Tecnologia pelo Id",
-            tags = {"Tecnologias"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Technology.class))
-                    ),
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unautorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
-            }
-    )
-    public ResponseEntity<Technology> getTechnologyById(@PathVariable Long id) {
-        Optional<Technology> technology = technologyService.getTechnologyById(id);
-        return technology.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     // Endpoint para listar todas as tecnologias
@@ -94,7 +70,7 @@ public class TechnologyController {
                             responseCode = "200",
                             content = @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Technology.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = TechnologyDto.class))
                             )
                     ),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
@@ -103,8 +79,10 @@ public class TechnologyController {
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
             }
     )
-    public ResponseEntity<List<Technology>> getAllTechnologies() {
-        List<Technology> technologies = technologyService.getAllTechnologies();
+    public ResponseEntity<TechnologyDto> getAllTechnologies() {
+
+        TechnologyDto technologies = technologyService.getAllTechnologies();
+
         return ResponseEntity.ok(technologies);
     }
 
@@ -114,7 +92,7 @@ public class TechnologyController {
             tags = {"Tecnologias"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Technology.class))
+                            content = @Content(schema = @Schema(implementation = TechnologyDto.class))
                     ),
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
@@ -123,9 +101,11 @@ public class TechnologyController {
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
             }
     )
-    public ResponseEntity<List<Technology>> getTechnologyByType(@PathVariable String type) {
+    public ResponseEntity<TechnologyDto> getTechnologyByType(@PathVariable String type) {
+
         TechnologyType technologyType = TechnologyType.valueOf(type.toUpperCase());
-        List<Technology> technologies = technologyService.getTechnologyByType(technologyType);
+        TechnologyDto technologies = technologyService.getTechnologyByType(technologyType);
+
         return ResponseEntity.ok(technologies);
     }
 
@@ -142,7 +122,7 @@ public class TechnologyController {
             tags = {"Tecnologias"},
             responses = {
                     @ApiResponse(description = "Updated", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Technology.class))
+                            content = @Content(schema = @Schema(implementation = TechnologyDto.class))
                     ),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),

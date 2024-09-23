@@ -1,9 +1,11 @@
 package com.isaacandrade.blog.service;
 
+import com.isaacandrade.blog.domain.projects.Project;
 import com.isaacandrade.blog.domain.technologies.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,16 +26,16 @@ public class TechnologyService {
         return mapToTechnologyDTO((List<Technology>) savedTechnology);
     }
 
-    public Optional<Technology> getTechnologyById(Long id) {
-        return technologyRepository.findById(id);
+    public TechnologyDto getAllTechnologies() {
+        List<Technology> technology = technologyRepository.findAll();
+
+        return mapToTechnologyDTO(technology);
     }
 
-    public List<Technology> getAllTechnologies() {
-        return technologyRepository.findAll();
-    }
+    public TechnologyDto getTechnologyByType(TechnologyType type) {
+        List<Technology> technologies = technologyRepository.findByType(type);
 
-    public List<Technology> getTechnologyByType(TechnologyType type) {
-        return technologyRepository.findByType(type);
+        return mapToTechnologyDTO(technologies);
     }
 
     public Optional<Technology> updateTechnology(Long id, Technology updatedTechnology) {
