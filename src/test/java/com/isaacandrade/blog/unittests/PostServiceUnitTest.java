@@ -12,9 +12,9 @@ import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.Mockito.any;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import org.mockito.InjectMocks;
@@ -163,12 +163,12 @@ public class PostServiceUnitTest {
     }
 
 
-    //----------TestsFindPostsById------------------------------------------------
+    //----------TestsFindPostsByTitle------------------------------------------------
     @Test
-    void findPostsByIdWithSuccess(){
-        when(postRepository.findById(post.getId())).thenReturn(Optional.of(post));
+    void findPostsByTitleWithSuccess(){
+        when(postRepository.findByTitle(post.getTitle())).thenReturn(post);
 
-        PostDTO result = postService.findById(post.getId());
+        PostDTO result = postService.findByTitle(post.getTitle());
 
         assertNotNull(result);
         assertEquals(post.getTitle(), result.title());
@@ -176,22 +176,22 @@ public class PostServiceUnitTest {
         assertEquals(post.getCreatedAt(), result.createdAt());
         assertEquals(post.getIsActive(), result.isActive());
 
-        verify(postRepository).findById(post.getId());
+        verify(postRepository).findByTitle(post.getTitle());
         verifyNoMoreInteractions(postRepository);
     }
 
     @Test
     void findPostsByIdWhenPostWasNoFoundShouldException(){
-        when(postRepository.findById(post.getId())).thenReturn(Optional.empty());
+        when(postRepository.findByTitle(post.getTitle())).thenThrow(new PostNotFoundException());
 
         PostNotFoundException exception = assertThrows(PostNotFoundException.class, () -> {
-            postService.findById(post.getId());
+            postService.findByTitle(post.getTitle());
         });
 
         MatcherAssert.assertThat(exception, notNullValue());
-        MatcherAssert.assertThat(exception.getMessage(), is("Post With Id " + post.getId() + " Was Not Found"));
+        MatcherAssert.assertThat(exception.getMessage(), is("Post Was Not Found"));
 
-        verify(postRepository).findById(post.getId());
+        verify(postRepository).findByTitle(post.getTitle());
         verifyNoMoreInteractions(postRepository);
     }
 

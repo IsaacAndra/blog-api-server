@@ -193,7 +193,7 @@ public class PostIntegrationTest extends MyIntegrationTest {
 
         postService.deletePost(createdPost.id());
 
-        PostDTO postDeleted = postService.findById(createdPost.id());
+        PostDTO postDeleted = postService.findByTitle(createdPost.title());
 
         assertFalse(postDeleted.isActive(), "Deve estar com isActive setado como Falso!");
         assertNotNull(createdPost);
