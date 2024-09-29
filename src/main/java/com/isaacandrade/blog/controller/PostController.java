@@ -83,10 +83,10 @@ public class PostController {
 
 
     @GetMapping(
-            value = "/{id}",
+            value = "/{title}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML}
     )
-    @Operation(summary = "Encontre o Post pelo Id", description = "Encontre o Post pelo Id",
+    @Operation(summary = "Encontre o Post pelo Titulo", description = "Encontre o Post pelo Titulo",
             tags = {"Posts"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
@@ -99,9 +99,9 @@ public class PostController {
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
             }
     )
-    public ResponseEntity<PostDTO> findPostById(@PathVariable Long id){
-        PostDTO postsById = postService.findById(id);
-        return ResponseEntity.ok(postsById);
+    public ResponseEntity<PostDTO> findPostByTitle(@PathVariable String title){
+        PostDTO postsByTitle = postService.findByTitle(title);
+        return ResponseEntity.ok(postsByTitle);
     }
 
 

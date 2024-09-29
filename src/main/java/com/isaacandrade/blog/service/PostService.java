@@ -47,8 +47,11 @@ public class PostService {
         return new AuthorWithPostsDTO(author, postDTOs);
     }
 
-    public PostDTO findById(Long id){
-        Post posts = postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("Post With Id " + id + " Was Not Found"));
+    public PostDTO findByTitle(String title){
+        Post posts = postRepository.findByTitle(title);
+            if (posts.getTitle().isEmpty()) {
+                throw new PostNotFoundException("Post With Title" + title + "Was Not Found");
+            }
         return mapToPostDTO(posts);
     }
 

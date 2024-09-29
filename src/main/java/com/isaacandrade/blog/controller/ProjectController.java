@@ -61,10 +61,10 @@ public class ProjectController {
 
 
     @GetMapping(
-            value = "/{id}",
+            value = "/{name}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML}
     )
-    @Operation(summary = "Encontre o Projeto pelo Id", description = "Encontre o Usuário pelo Id",
+    @Operation(summary = "Encontre o Projeto pelo nome", description = "Encontre o Usuário pelo nome",
             tags = {"Projetos"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
@@ -77,10 +77,10 @@ public class ProjectController {
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
             }
     )
-    public ResponseEntity<ProjectDto> getProjectById(@PathVariable Long id) {
-        ProjectDto projectById = projectService.getProjectById(id);
+    public ResponseEntity<ProjectDto> getProjectByName(@PathVariable String name) {
+        ProjectDto projectByName = projectService.getProjectByName(name);
 
-        return ResponseEntity.ok(projectById);
+        return ResponseEntity.ok(projectByName);
     }
 
 

@@ -35,10 +35,12 @@ public class ProjectService {
     }
 
     // Metodo para mostrar um projeto pelo id
-    public ProjectDto getProjectById(Long id) {
-        Project project = projectRepository.findById(id).orElseThrow(
-                () -> new ProjectNotFoundException("Project With id " + id + " Was Not Found!")
-        );
+    public ProjectDto getProjectByName(String name) {
+        Project project = projectRepository.findByName(name);
+
+        if (project.getName().isEmpty()) {
+            throw new ProjectNotFoundException("Project with name " + name + " Was Not Found!");
+        }
 
         return mapToProjectDTO(project);
     }
