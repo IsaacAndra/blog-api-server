@@ -20,4 +20,10 @@ public class About {
 
     @Column(name = "content")
     String content;
+
+    public void updateAbout(EditAboutDTO data) {
+        if (data.content() == null) {
+            this.content = data.content();
+        }
+    }
 }
