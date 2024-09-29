@@ -1,0 +1,4 @@
+CREATE TABLE about (
+    id SERIAL PRIMARY KEY NOT NULL,
+    content TEXT NOT NULL
+)
